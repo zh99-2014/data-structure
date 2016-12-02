@@ -1,31 +1,31 @@
 #include<iostream>
 #include<vector>
-using namespace::std;
+using namespace std;
 
-void merge(vector<int> &vA, int lo, int mi, int hi) {	//¶şÂ·¹é²¢
-	vector<int> vB;		//ÉêÇëBÏòÁ¿
-	//lo,mi,hi¶¼ÊÇA£¨C£©ÏòÁ¿µÄÎ»ÖÃ£¬Ö±½ÓÓÃÓÚB»áµ¼ÖÂÔ½½ç
-	int lob = 0, hib = mi - lo;		//¶¨ÒåBÏòÁ¿µÄlo,hi
-	int loc = mi, hic = hi;		//¶¨ÒåCÏòÁ¿µÄlo,hi
+void merge(vector<int> &vA, int lo, int mi, int hi) {	//äºŒè·¯å½’å¹¶
+	vector<int> vB;		//ç”³è¯·Bå‘é‡
+	//lo,mi,hiéƒ½æ˜¯Aï¼ˆCï¼‰å‘é‡çš„ä½ç½®ï¼Œç›´æ¥ç”¨äºBä¼šå¯¼è‡´è¶Šç•Œ
+	int lob = 0, hib = mi - lo;		//å®šä¹‰Bå‘é‡çš„lo,hi
+	int loc = mi, hic = hi;		//å®šä¹‰Cå‘é‡çš„lo,hi
 	int temp = lo;
-	for (; lob < hib; ++lob)	//AÏòÁ¿µÄÇ°°ë¶Î[lo,mi)¸³¸øBÏòÁ¿£¬ºó°ë¶Î[mi,hi)Ä¬ÈÏÊÇC
+	for (; lob < hib; ++lob)	//Aå‘é‡çš„å‰åŠæ®µ[lo,mi)èµ‹ç»™Bå‘é‡ï¼ŒååŠæ®µ[mi,hi)é»˜è®¤æ˜¯C
 		vB.push_back(vA[lo++]);
 	lo = temp;
 	lob = 0;
-	//¶şÂ·¹é²¢±È½ÏBºÍC
-	for (int i = lo, j = lob, k = mi; (j < hib) || (k < hic);) {	//²»³ö½çµÄÌõ¼şÒªÏÈÅĞ¶Ï£¡²»È»ÈİÒ×Ô½½ç£¡
-		if ( (k < hic) && ( !(j < hib) || (vA[k] < vB[j]) ) ) vA[i++] = vA[k++];	//£¨cÎ´³ö½ç£©ÇÒ£¨b³ö½ç£¬»òvc½Ï´ó£©
-		if ( (j < hib) && ( !(k < hic) || (vB[j] <= vA[k]) ) ) vA[i++] = vB[j++];	//£¨bÎ´³ö½ç£©ÇÒ£¨c³ö½ç£¬»òvb½Ï´ó£©
+	//äºŒè·¯å½’å¹¶æ¯”è¾ƒBå’ŒC
+	for (int i = lo, j = lob, k = mi; (j < hib) || (k < hic);) {	//ä¸å‡ºç•Œçš„æ¡ä»¶è¦å…ˆåˆ¤æ–­ï¼ä¸ç„¶å®¹æ˜“è¶Šç•Œï¼
+		if ( (k < hic) && ( !(j < hib) || (vA[k] < vB[j]) ) ) vA[i++] = vA[k++];	//ï¼ˆcæœªå‡ºç•Œï¼‰ä¸”ï¼ˆbå‡ºç•Œï¼Œæˆ–vcè¾ƒå¤§ï¼‰
+		if ( (j < hib) && ( !(k < hic) || (vB[j] <= vA[k]) ) ) vA[i++] = vB[j++];	//ï¼ˆbæœªå‡ºç•Œï¼‰ä¸”ï¼ˆcå‡ºç•Œï¼Œæˆ–vbè¾ƒå¤§ï¼‰
 	}
 	vB.resize(0);
 }
 
-void mergesort(vector<int> &vA, int lo, int hi) {	//¹é²¢ÅÅĞò£¬0 <= lo < hi <= size
-	if (hi - lo < 2) return;	//µ¥ÔªËØÇø¼ä×ÔÈ»ÓĞĞò.Èç¹û hi - lo = 1£¬Ôò»áÒ»Ö±Ñ­»·ÏÂÈ¥£»×îĞ¡Îª2£¬±£Ö¤mi¿É²åÈëÁ½±ß±ß½ç£¬È»ºó·µ»Ø
-	int mi = (lo + hi) / 2;	//ÖĞµã
+void mergesort(vector<int> &vA, int lo, int hi) {	//å½’å¹¶æ’åºï¼Œ0 <= lo < hi <= size
+	if (hi - lo < 2) return;	//å•å…ƒç´ åŒºé—´è‡ªç„¶æœ‰åº.å¦‚æœ hi - lo = 1ï¼Œåˆ™ä¼šä¸€ç›´å¾ªç¯ä¸‹å»ï¼›æœ€å°ä¸º2ï¼Œä¿è¯miå¯æ’å…¥ä¸¤è¾¹è¾¹ç•Œï¼Œç„¶åè¿”å›
+	int mi = (lo + hi) / 2;	//ä¸­ç‚¹
 	mergesort(vA, lo, mi);
-	mergesort(vA, mi, hi);	//·Ö±ğÅÅĞòÁ½¸öÏòÁ¿£¬µİ¹é·Ö½â
-	merge(vA, lo, mi, hi);	//¹é²¢
+	mergesort(vA, mi, hi);	//åˆ†åˆ«æ’åºä¸¤ä¸ªå‘é‡ï¼Œé€’å½’åˆ†è§£
+	merge(vA, lo, mi, hi);	//å½’å¹¶
 }
 
 int getMi(vector<int> v, int lo, int hi, int e) {
@@ -39,28 +39,28 @@ int getMi(vector<int> v, int lo, int hi, int e) {
 
 int result_of_Inter(vector<int> v,int lo,int hi,int e) {
 	int mi = 0;
-	mi = getMi(v, lo, hi, e);//»ñÈ¡²éÕÒ a ¶ÔÓ¦µÄÖáµã
+	mi = getMi(v, lo, hi, e);//è·å–æŸ¥æ‰¾ a å¯¹åº”çš„è½´ç‚¹
 	while ((lo < hi) && (mi != lo) && (mi != hi)) {
-		if (v[mi] < e) //miÕÒĞ¡ÁË£¬Ê¹miÓÒÒÆ±ä´ó
+		if (v[mi] < e) //miæ‰¾å°äº†ï¼Œä½¿miå³ç§»å˜å¤§
 			lo = mi;
-		else if (e < v[mi]) //miÕÒ´óÁË£¬Ê¹mi×óÒÆ±äĞ¡
+		else if (e < v[mi]) //miæ‰¾å¤§äº†ï¼Œä½¿miå·¦ç§»å˜å°
 			hi = mi;
 		else break;
-		mi = getMi(v, lo, hi, e);//»ñÈ¡²éÕÒ a ¶ÔÓ¦µÄÖáµã
+		mi = getMi(v, lo, hi, e);//è·å–æŸ¥æ‰¾ a å¯¹åº”çš„è½´ç‚¹
 	}
 
 	return mi;
 }
 
-int InterpolationSearch(vector<int> v, int lo, int hi, int a, int b) {//²åÖµ²éÕÒ
-	int mi = 0;//ÎªÁË·½±ã¼ÆËã£¬hiÈ¡µÄÊÇvÖĞ×îºóÒ»¸öÔªËØ
+int InterpolationSearch(vector<int> v, int lo, int hi, int a, int b) {//æ’å€¼æŸ¥æ‰¾
+	int mi = 0;//ä¸ºäº†æ–¹ä¾¿è®¡ç®—ï¼Œhiå–çš„æ˜¯vä¸­æœ€åä¸€ä¸ªå…ƒç´ 
 	
-	mi = result_of_Inter(v, lo, hi, a);	//ÏÖÔÚÒÑ¾­ÕÒµ½±ß½ç a µÄ´ó¸ÅÎ»ÖÃ
-	if (v[mi] < a)  a = ++mi;			//ÏÖÔÚÒª×öµÄÊÇÅĞ¶Ï a ÕâÒ»¸öÖµÔÚ½ÓÏÂÀ´µÄ±ß½çÅĞ¶ÏÖĞÊÇ·ñ±£Áô
-	else a = mi;						//Èç¹ûmiºÍloÖØºÏ£¬È¡a=mi+1£¬±£Ö¤a¶ÔÓ¦µÄÖµÄÜ¹»È¡µ½
+	mi = result_of_Inter(v, lo, hi, a);	//ç°åœ¨å·²ç»æ‰¾åˆ°è¾¹ç•Œ a çš„å¤§æ¦‚ä½ç½®
+	if (v[mi] < a)  a = ++mi;			//ç°åœ¨è¦åšçš„æ˜¯åˆ¤æ–­ a è¿™ä¸€ä¸ªå€¼åœ¨æ¥ä¸‹æ¥çš„è¾¹ç•Œåˆ¤æ–­ä¸­æ˜¯å¦ä¿ç•™
+	else a = mi;						//å¦‚æœmiå’Œloé‡åˆï¼Œå–a=mi+1ï¼Œä¿è¯aå¯¹åº”çš„å€¼èƒ½å¤Ÿå–åˆ°
 	
 	mi = result_of_Inter(v, lo, hi, b);
-	if (v[mi] > b)	b = --mi;			//Èç¹ûmiºÍhiÖØºÏ£¬È¡b=mi-1£¬±£Ö¤b¶ÔÓ¦µÄÖµÄÜ¹»È¡µ½
+	if (v[mi] > b)	b = --mi;			//å¦‚æœmiå’Œhié‡åˆï¼Œå–b=mi-1ï¼Œä¿è¯bå¯¹åº”çš„å€¼èƒ½å¤Ÿå–åˆ°
 	else b = mi;
 
 	return (b - a + 1);
@@ -69,20 +69,20 @@ int InterpolationSearch(vector<int> v, int lo, int hi, int a, int b) {//²åÖµ²éÕÒ
 int main() {
 	vector<int> v;
 	int n = 0, m = 0, a = 0, b = 0;
-	cin >> n >> m;	//n,m¿ÉÕıÈ·¶ÁÈë
-	for (int i = 0; i != n; ++i) {	//n¸öÊıÒÑ¾­¶ÁÈëvector<int> v
+	cin >> n >> m;	//n,må¯æ­£ç¡®è¯»å…¥
+	for (int i = 0; i != n; ++i) {	//nä¸ªæ•°å·²ç»è¯»å…¥vector<int> v
 		int temp = 0;
 		cin >> temp;
 		v.push_back(temp);
 	}
 	while (m--) {
-		cin >> a >> b;	//a,b¶ÁÈë
+		cin >> a >> b;	//a,bè¯»å…¥
 
-		//ÔİÎ´¿¼ÂÇÔªËØÖØ¸´Çé¿ö
-		//ÏÈ¶ÔÆäÅÅĞò£¬¿¼ÂÇ¹é²¢ÅÅĞò
+		//æš‚æœªè€ƒè™‘å…ƒç´ é‡å¤æƒ…å†µ
+		//å…ˆå¯¹å…¶æ’åºï¼Œè€ƒè™‘å½’å¹¶æ’åº
 		mergesort(v, 0, (int)v.size());
 
-		//ÏÖÔÚ¶ÔÆä½øĞĞ²éÕÒ¡£²åÖµ²éÕÒ.
+		//ç°åœ¨å¯¹å…¶è¿›è¡ŒæŸ¥æ‰¾ã€‚æ’å€¼æŸ¥æ‰¾.
 		int loc = 0;
 		loc = InterpolationSearch(v, 0, (int)v.size() - 1, a, b);
 		cout << loc << endl;
