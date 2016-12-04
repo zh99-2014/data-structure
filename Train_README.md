@@ -1,12 +1,4 @@
-Tsinghua Online Judge
-•	Foyer
-•	Profile 
-•	Courses 
-•	Guide
-•	Logout
-•	My Courses
-列车调度(Train)
-________________________________________
+# Tsinghua Online Judge
 Description
 Figure 1 shows the structure of a station for train dispatching.
  
