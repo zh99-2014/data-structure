@@ -19,12 +19,6 @@ void merge(vector<Coordinate> &V_Points, int lo, int mi, int hi,int &count) {
 	loa = lo;
 	//new Vb is ready
 
-	//bug: elements in the smaller vector can only be examed once
-	//perhaps it will miss the the other elements in bigger vector
-	//e.g. c:(1,1),(2,2),(3,3)
-	//	   b:(4,4),(5,5)
-	//we will get (1,4),(2,4),(3,4) and miss pairs of 5
-
 	for (int i = loa, j = lob, k = loc; (j < hib) || (k < hic);) {
 		if (k < hic) {//c is in range
 			if (j < hib) {//b is in range
@@ -60,14 +54,7 @@ void merge(vector<Coordinate> &V_Points, int lo, int mi, int hi,int &count) {
 				++i; ++j;
 			}
 		}
-
-
-/*	for (int i = loa, j = lob, k = loc; (j < hib) || (k < hic);) {
-		if ((k < hic) && (!(j < hib) || (V_Points[k].x < Vb_Points[j].x)))//c is in range, and (b is out or c is smaller)
-			V_Points[i++] = V_Points[k++];//c is assigned for a
-		if ((j < hib) && (!(k < hic) || (Vb_Points[j].x <= V_Points[k].x)))//b is in range, and (c is out or b is smaller)
-			V_Points[i++] = Vb_Points[j++];//b is assigned for a
-*/	}
+	}
 
 }
 
